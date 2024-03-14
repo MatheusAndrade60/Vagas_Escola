@@ -13,12 +13,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,16 +34,44 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import br.com.fiap.projeto_vagas_escola.R
 
 @Composable
-fun Welcome() {
-    Box(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
+fun CadastroScreen(navController: NavController) {
+
+    var nome_responsavel by remember {
+        mutableStateOf("")
+    }
+    var cpf by remember {
+        mutableStateOf("")
+    }
+    var cep by remember {
+        mutableStateOf("")
+    }
+    var email by remember {
+        mutableStateOf("")
+    }
+    var senha by remember {
+        mutableStateOf("")
+    }
+
+    //Box inicial com logo e titulo
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .background(Color.White),
+        ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
@@ -61,6 +96,7 @@ fun Welcome() {
                 )
             }
 
+            //Card para cadastrar um usuario
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
@@ -69,8 +105,8 @@ fun Welcome() {
             ) {
                 Card(modifier = Modifier
                     .fillMaxWidth()
-                    .offset(y = (150).dp),
-                    colors = CardDefaults.cardColors(Color.Gray),
+                    .offset(y = (50).dp),
+                    colors = CardDefaults.cardColors(Color.White),
                     elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
                     shape = RoundedCornerShape(8.dp)
                 ) {
@@ -79,28 +115,42 @@ fun Welcome() {
                         horizontal = 32.dp
                     )
                     ) {
+                        Spacer(modifier = Modifier.height(5.dp))
                         Text(
-                            text = "Seja Bem-vindo(a)",
+                            text = "CADASTRO",
                             modifier = Modifier.fillMaxWidth(),
-                            fontSize = 23.sp,
+                            fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
-                            color = colorResource(id = R.color.white),
+                            color = Color.Gray,
                             textAlign = TextAlign.Center
                         )
 
-                        Spacer(modifier = Modifier.height(22.dp))
+                        //Aqui esta sendo utilizado um metodo que cria um OutlinedTextField
+                        Spacer(modifier = Modifier.height(20.dp))
+                        OutlinedTextField(titulo = "Nome do Responsavel")
+
+                        Spacer(modifier = Modifier.height(20.dp))
+                        OutlinedTextField(titulo = "CPF")
+
+                        Spacer(modifier = Modifier.height(20.dp))
+                        OutlinedTextField(titulo = "CEP")
+
+                        Spacer(modifier = Modifier.height(20.dp))
+                        OutlinedTextField(titulo = "Email")
+
+                        Spacer(modifier = Modifier.height(10.dp))
+                        OutlinedTextField(titulo = "Senha")
+
+                        Spacer(modifier = Modifier.height(32.dp))
                         Button(
-                            onClick = {},
+                            onClick = {navController.navigate("login")},
                             modifier = Modifier
-                                .size(105.dp,45.dp).align(Alignment.CenterHorizontally),
+                                .fillMaxWidth()
+                                .height(48.dp),
                             shape = RoundedCornerShape(16.dp),
                             colors = ButtonDefaults.buttonColors(Color.Red)
-                        )
-                        {
-                            Text(
-                                text = "INICIAR",
-                                fontSize = 15.sp
-                            )
+                        ) {
+                            Text(text = "FINALIZAR")
                         }
                     }
                 }
@@ -109,8 +159,41 @@ fun Welcome() {
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun WelcomePreview() {
-    Welcome()
+fun OutlinedTextField(titulo : String) {
+    val titulo by remember {
+        mutableStateOf(titulo)
+    }
+    var guarda_digito by remember {
+        mutableStateOf("")
+    }
+
+    Text(
+        text = titulo,
+        modifier = Modifier.padding(bottom = 8.dp),
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Normal,
+        color = Color.Black
+    )
+    OutlinedTextField(
+        value = guarda_digito,
+        onValueChange = {
+            guarda_digito = it
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(height = 48.dp),
+        colors = OutlinedTextFieldDefaults.colors(
+            unfocusedBorderColor = colorResource(id = R.color.gray),
+            focusedBorderColor = colorResource(id = R.color.black)
+        ),
+        shape = RoundedCornerShape(16.dp),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+    )
+}
+
+@Preview
+@Composable
+private fun OutlinedTextFieldPreview() {
+    //OutlinedTextField()
 }

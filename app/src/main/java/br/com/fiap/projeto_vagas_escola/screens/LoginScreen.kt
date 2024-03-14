@@ -2,8 +2,10 @@ package br.com.fiap.projeto_vagas_escola.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,20 +32,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import br.com.fiap.projeto_vagas_escola.R
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavController) {
 
     var email by remember {
         mutableStateOf("")
@@ -93,7 +95,7 @@ fun LoginScreen() {
             ) {
                 Card(modifier = Modifier
                     .fillMaxWidth()
-                    .offset(y = (110).dp),
+                    .offset(y = (50).dp),
                     colors = CardDefaults.cardColors(Color.White),
                     elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
                     shape = RoundedCornerShape(8.dp)
@@ -105,9 +107,9 @@ fun LoginScreen() {
                     ) {
                         Spacer(modifier = Modifier.height(5.dp))
                         Text(
-                            text = "Login",
+                            text = "LOGIN",
                             modifier = Modifier.fillMaxWidth(),
-                            fontSize = 24.sp,
+                            fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.Gray,
                             textAlign = TextAlign.Center
@@ -117,7 +119,7 @@ fun LoginScreen() {
                         Text(
                             text = "Email",
                             modifier = Modifier.padding(bottom = 8.dp),
-                            fontSize = 12.sp,
+                            fontSize = 14.sp,
                             fontWeight = FontWeight.Normal,
                             color = Color.Gray
                         )
@@ -135,14 +137,14 @@ fun LoginScreen() {
                                 focusedBorderColor = colorResource(id = R.color.black)
                             ),
                             shape = RoundedCornerShape(16.dp),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
                         )
 
                         Spacer(modifier = Modifier.height(22.dp))
                         Text(
                             text = "Senha",
                             modifier = Modifier.padding(bottom = 8.dp),
-                            fontSize = 12.sp,
+                            fontSize = 14.sp,
                             fontWeight = FontWeight.Normal,
                             color = Color.Gray
                         )
@@ -160,13 +162,31 @@ fun LoginScreen() {
                                 focusedBorderColor = colorResource(id = R.color.black)
                             ),
                             shape = RoundedCornerShape(16.dp),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
                             //isError = erroPeso
                         )
 
-                        Spacer(modifier = Modifier.height(32.dp))
+                        Spacer(modifier = Modifier.height(20.dp))
+                        Row(
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        ){
+                            Button(onClick = { navController.navigate("cadastro") },
+                                modifier = Modifier
+                                    .size(width = 129.dp, height = 33.dp),
+                                colors = ButtonDefaults.buttonColors(Color.White),
+                                shape = RectangleShape
+                            ) {
+                                Text(
+                                    text = "Cadastrar-se",
+                                    color = Color.Black
+                                )
+                            }
+
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
                         Button(
-                            onClick = {},
+                            onClick = {navController.navigate("api")},
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(48.dp),
@@ -183,8 +203,8 @@ fun LoginScreen() {
     }
 }
 
-@Preview
-@Composable
-private fun LoginScreenPreview() {
-    LoginScreen()
-}
+//@Preview
+//@Composable
+//private fun LoginScreenPreview() {
+//    LoginScreen()
+//}
