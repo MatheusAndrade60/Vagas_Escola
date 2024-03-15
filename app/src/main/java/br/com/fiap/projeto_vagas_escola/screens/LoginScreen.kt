@@ -9,14 +9,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,20 +29,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import br.com.fiap.projeto_vagas_escola.R
 import br.com.fiap.projeto_vagas_escola.component.Header
-import br.com.fiap.projeto_vagas_escola.component.TextField
 
 @Composable
-fun LoginScreen(
-    navController: NavController
-) {
+fun LoginScreen(navController: NavController){
     var email by remember {
         mutableStateOf("")
     }
@@ -66,11 +66,10 @@ fun LoginScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 32.dp)
+                    .padding(horizontal = 32.dp, vertical = 50.dp)
             ) {
                 Card(modifier = Modifier
-                    .fillMaxWidth()
-                    .offset(y = (50).dp),
+                    .fillMaxWidth(),
                     colors = CardDefaults.cardColors(Color.White),
                     elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
                     shape = RoundedCornerShape(8.dp)
@@ -94,10 +93,52 @@ fun LoginScreen(
 
                         //Aqui esta sendo utilizado um metodo que cria um OutlinedTextField
                         Spacer(modifier = Modifier.height(20.dp))
-                        TextField(titulo = "Email", "email_login", KeyboardType.Email)
+                        Text(
+                            text = "Email",
+                            modifier = Modifier.padding(bottom = 8.dp),
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = Color.Black
+                        )
+                        OutlinedTextField(
+                            value = email,
+                            onValueChange = {
+                                email = it
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(height = 48.dp),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                unfocusedBorderColor = colorResource(id = R.color.gray),
+                                focusedBorderColor = colorResource(id = R.color.black)
+                            ),
+                            shape = RoundedCornerShape(30.dp),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                        )
 
                         Spacer(modifier = Modifier.height(15.dp))
-                        TextField(titulo = "Senha","senha_login", KeyboardType.Password)
+                        Text(
+                            text = "Senha",
+                            modifier = Modifier.padding(bottom = 8.dp),
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = Color.Black
+                        )
+                        OutlinedTextField(
+                            value = senha,
+                            onValueChange = {
+                                senha = it
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(height = 48.dp),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                unfocusedBorderColor = colorResource(id = R.color.gray),
+                                focusedBorderColor = colorResource(id = R.color.black)
+                            ),
+                            shape = RoundedCornerShape(30.dp),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        )
 
                         //Botão que ir levar o usuario para a tela de cadastro
                         Spacer(modifier = Modifier.height(15.dp))
@@ -107,7 +148,7 @@ fun LoginScreen(
                         ){
                             Button(onClick = {
                                 navController.navigate("cadastro")
-                                             },
+                            },
                                 modifier = Modifier
                                     .size(width = 129.dp, height = 31.dp),
                                 colors = ButtonDefaults.buttonColors(Color.White),
@@ -127,13 +168,13 @@ fun LoginScreen(
                         Button(
                             onClick = {
                                 navController.navigate("api")
-                                      },
+                            },
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
                                 .size(width = 103.dp, height = 40.dp)
                                 .fillMaxWidth(),
-                            shape = RoundedCornerShape(20.dp),
-                            colors = ButtonDefaults.buttonColors(Color.Red)
+                            shape = RoundedCornerShape(30.dp),
+                            colors = ButtonDefaults.buttonColors(Color(0xFF459945))
                         )
                         {
                             Text(

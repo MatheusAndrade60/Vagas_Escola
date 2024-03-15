@@ -1,5 +1,6 @@
 package br.com.fiap.projeto_vagas_escola.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,19 +20,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import br.com.fiap.projeto_vagas_escola.R
 import br.com.fiap.projeto_vagas_escola.component.Header
 
 @Composable
-fun WelcomeScreen(navController: NavController) {
+fun WelcomeScreen(navController: NavController){
     Box(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier
+            .background(Color.White)
             .fillMaxWidth()
             .fillMaxHeight()
         ) {
@@ -46,9 +46,9 @@ fun WelcomeScreen(navController: NavController) {
             ) {
                 Card(modifier = Modifier
                     .fillMaxWidth()
-                    .offset(y = (150).dp),
-                    colors = CardDefaults.cardColors(Color.Gray),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                    .offset(y = (160).dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF4F6FA)),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Column(modifier = Modifier.padding(
@@ -59,20 +59,22 @@ fun WelcomeScreen(navController: NavController) {
                         Text(
                             text = "Seja Bem-vindo(a)",
                             modifier = Modifier.fillMaxWidth(),
-                            fontSize = 23.sp,
+                            fontSize = 22.sp,
                             fontWeight = FontWeight.Bold,
-                            color = colorResource(id = R.color.white),
+                            color = Color.Black,
                             textAlign = TextAlign.Center
                         )
 
-                        Spacer(modifier = Modifier.height(22.dp))
+                        Spacer(modifier = Modifier.height(15.dp))
                         Button(
-                            onClick = {navController.navigate("login")},
+                            onClick = {
+                                navController.navigate("login")
+                            },
                             modifier = Modifier
-                                .size(105.dp, 45.dp)
+                                .size(105.dp, 42.dp)
                                 .align(Alignment.CenterHorizontally),
-                            shape = RoundedCornerShape(16.dp),
-                            colors = ButtonDefaults.buttonColors(Color.Red)
+                            shape = RoundedCornerShape(30.dp),
+                            colors = ButtonDefaults.buttonColors(Color(0xFF459945))
                         )
                         {
                             Text(
@@ -90,5 +92,5 @@ fun WelcomeScreen(navController: NavController) {
 //@Preview(showBackground = true, showSystemUi = true)
 //@Composable
 //fun WelcomePreview() {
-//    Welcome()
+//    WelcomeScreen()
 //}
