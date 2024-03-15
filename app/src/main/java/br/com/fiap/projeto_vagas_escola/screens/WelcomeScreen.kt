@@ -1,7 +1,5 @@
 package br.com.fiap.projeto_vagas_escola.screens
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -21,45 +18,25 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.projeto_vagas_escola.R
+import br.com.fiap.projeto_vagas_escola.component.Header
 
 @Composable
 fun WelcomeScreen(navController: NavController) {
     Box(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(160.dp)
-                    .background(color = Color.Gray)
-            ) {
-                Spacer(modifier = Modifier.height(16.dp))
-                Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(80.dp)
-                        .clip(shape = CircleShape),
-                    contentScale = ContentScale.Crop
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "Vagas De Matricula",
-                    color = Color.White,
-                    fontSize = 20.sp
-                )
-            }
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+        ) {
+            //Medoto que ira retornar um layout para o Header
+            Header()
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -92,7 +69,8 @@ fun WelcomeScreen(navController: NavController) {
                         Button(
                             onClick = {navController.navigate("login")},
                             modifier = Modifier
-                                .size(105.dp,45.dp).align(Alignment.CenterHorizontally),
+                                .size(105.dp, 45.dp)
+                                .align(Alignment.CenterHorizontally),
                             shape = RoundedCornerShape(16.dp),
                             colors = ButtonDefaults.buttonColors(Color.Red)
                         )
