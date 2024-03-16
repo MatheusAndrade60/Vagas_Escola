@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.com.fiap.projeto_vagas_escola.screens.ApiScreen
+import br.com.fiap.projeto_vagas_escola.screens.HomeScreen
 import br.com.fiap.projeto_vagas_escola.screens.CadastroScreen
 import br.com.fiap.projeto_vagas_escola.screens.LoginScreen
 import br.com.fiap.projeto_vagas_escola.screens.WelcomeScreen
@@ -37,8 +37,8 @@ class MainActivity : ComponentActivity() {
                         composable(route = "cadastro") {
                             CadastroScreen(navController)
                         }
-                        composable(route = "api") {
-                            ApiScreen(navController)
+                        composable(route = "home") {
+                            HomeScreen(navController)
                         }
                     }
                 }

@@ -167,7 +167,7 @@ fun LoginScreen(navController: NavController){
                         Spacer(modifier = Modifier.height(2.dp))
                         Button(
                             onClick = {
-                                navController.navigate("api")
+                                navController.navigate("home")
                             },
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
