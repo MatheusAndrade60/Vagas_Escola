@@ -1,29 +1,29 @@
 package br.com.fiap.projeto_vagas_escola.screens
-
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.projeto_vagas_escola.R
 import br.com.fiap.projeto_vagas_escola.component.Header
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun HomeScreen() {
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -36,7 +36,7 @@ fun HomeScreen() {
 
             item {
                 Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                    horizontalAlignment = CenterHorizontally,
                     modifier = Modifier.fillMaxWidth()
                 ){
                     OutlinedTextField(
@@ -61,28 +61,29 @@ fun HomeScreen() {
                 }
             }
 
+            //Precisa sair do Lazy de cima
             item {
                 Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.escola),
-                        contentDescription = "logo",
+                        contentDescription = "mapa",
                         modifier = Modifier
-                            .size(500.dp),
-                        contentScale = ContentScale.FillWidth
+                            .size(525.dp)
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
+                    }
+                Row (){
                     Text(text = "Arthur Morgan")
                     Text(text = "Dutch")
+                }
                 }
             }
         }
     }
-}
 
-@Preview
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomeScreenPreview() {
     HomeScreen()
