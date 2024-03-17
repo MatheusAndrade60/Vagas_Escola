@@ -37,6 +37,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.projeto_vagas_escola.R
 import br.com.fiap.projeto_vagas_escola.component.Header
+import androidx.compose.runtime.*
+import kotlinx.coroutines.*
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import java.net.URL
 
 @Composable
 fun CadastroScreen(navController: NavController) {
