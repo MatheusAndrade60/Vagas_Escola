@@ -72,4 +72,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+    implementation ("androidx.core:core-ktx:1.8.0")
 }
