@@ -1,9 +1,11 @@
 package br.com.fiap.projeto_vagas_escola.screens
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
@@ -27,7 +29,7 @@ fun HomeScreen() {
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
         ) {
             item {
@@ -38,7 +40,7 @@ fun HomeScreen() {
                 Column(
                     horizontalAlignment = CenterHorizontally,
                     modifier = Modifier.fillMaxWidth()
-                ){
+                ) {
                     OutlinedTextField(
                         value = "",
                         onValueChange = {},
@@ -61,27 +63,45 @@ fun HomeScreen() {
                 }
             }
 
-            //Precisa sair do Lazy de cima
             item {
                 Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.escola),
                         contentDescription = "mapa",
                         modifier = Modifier
-                            .size(525.dp)
+                            .size(500.dp)
                     )
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Row(modifier = Modifier
+                        .fillMaxWidth()
+                        ) {
+                        Button(
+                            onClick = {},
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0000FF)),
+                            modifier = Modifier
+                                .size(width = 180.dp, height = 50.dp),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            // Texto dentro do botão
+                        }
+                        Button(
+                            onClick = {},
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Green),
+                            modifier = Modifier
+                                .size(width = 180.dp, height = 50.dp),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            // Texto dentro do botão
+                        }
                     }
-                Row (){
-                    Text(text = "Arthur Morgan")
-                    Text(text = "Dutch")
-                }
                 }
             }
         }
     }
+}
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
