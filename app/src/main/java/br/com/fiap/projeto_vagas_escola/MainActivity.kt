@@ -28,11 +28,11 @@ class MainActivity : ComponentActivity() {
                 ){
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "welcome") {
-                        composable(route = "login") {
-                            LoginScreen(navController)
-                        }
                         composable(route = "welcome") {
                             WelcomeScreen(navController)
+                        }
+                        composable(route = "login") {
+                            LoginScreen(navController)
                         }
                         composable(route = "cadastro") {
                             CadastroScreen(navController)

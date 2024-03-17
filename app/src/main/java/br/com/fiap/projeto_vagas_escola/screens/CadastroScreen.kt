@@ -1,8 +1,10 @@
 package br.com.fiap.projeto_vagas_escola.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,10 +14,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -38,9 +44,14 @@ import androidx.navigation.NavController
 import br.com.fiap.projeto_vagas_escola.R
 import br.com.fiap.projeto_vagas_escola.component.Header
 import androidx.compose.runtime.*
+import br.com.fiap.projeto_vagas_escola.model.Endereco
+import br.com.fiap.projeto_vagas_escola.service.RetrofitFactory
 import kotlinx.coroutines.*
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+//import kotlinx.serialization.Serializable
+//import kotlinx.serialization.json.Json
 import java.net.URL
 
 @Composable
@@ -63,6 +74,9 @@ fun CadastroScreen(navController: NavController) {
     }
     var senha by remember {
         mutableStateOf("")
+    }
+    var listaEnderecos by remember {
+        mutableStateOf(listOf<Endereco>())
     }
 
     //Box inicial com logo e titulo
@@ -142,45 +156,67 @@ fun CadastroScreen(navController: NavController) {
                                 fontWeight = FontWeight.Normal,
                                 color = Color.Black
                             )
-                            OutlinedTextField(
-                                value = cpfResponsavel,
-                                onValueChange = {
-                                    cpfResponsavel = it
-                                },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(height = 48.dp),
-                                colors = OutlinedTextFieldDefaults.colors(
-                                    unfocusedBorderColor = colorResource(id = R.color.gray),
-                                    focusedBorderColor = colorResource(id = R.color.black)
-                                ),
-                                shape = RoundedCornerShape(30.dp),
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            )
+                                OutlinedTextField(
+                                    value = cpfResponsavel,
+                                    onValueChange = {
+                                        cpfResponsavel = it
+                                    },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(height = 48.dp),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        unfocusedBorderColor = colorResource(id = R.color.gray),
+                                        focusedBorderColor = colorResource(id = R.color.black)
+                                    ),
+                                    shape = RoundedCornerShape(30.dp),
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                )
 
-                            Spacer(modifier = Modifier.height(10.dp))
-                            Text(
-                                text = "CEP",
-                                modifier = Modifier.padding(bottom = 8.dp),
-                                fontSize = 13.sp,
-                                fontWeight = FontWeight.Normal,
-                                color = Color.Black
-                            )
-                            OutlinedTextField(
-                                value = cep,
-                                onValueChange = {
-                                    cep = it
-                                },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(height = 48.dp),
-                                colors = OutlinedTextFieldDefaults.colors(
-                                    unfocusedBorderColor = colorResource(id = R.color.gray),
-                                    focusedBorderColor = colorResource(id = R.color.black)
-                                ),
-                                shape = RoundedCornerShape(30.dp),
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            )
+                                Spacer(modifier = Modifier.height(10.dp))
+                                Text(
+                                    text = "CEP",
+                                    modifier = Modifier.padding(bottom = 8.dp),
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Normal,
+                                    color = Color.Black
+                                )
+                                OutlinedTextField(
+                                    value = cep,
+                                    onValueChange = {
+                                        cep = it
+                                    },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(height = 48.dp),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        unfocusedBorderColor = colorResource(id = R.color.gray),
+                                        focusedBorderColor = colorResource(id = R.color.black)
+                                    ),
+                                    shape = RoundedCornerShape(30.dp),
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                    trailingIcon = {
+                                        IconButton(onClick = {
+                                            var call = RetrofitFactory().getCepService().getEnderecoByCep(cep = cep)
+                                            call.enqueue(object : Callback<Endereco>{
+                                                override fun onResponse(
+                                                    call: Call<Endereco>,
+                                                    response: Response<Endereco>
+                                                ) {
+                                                    Log.i("API", "onResponse: ${response.body()}")
+                                                }
+                                                override fun onFailure(call: Call<Endereco>, t: Throwable) {
+                                                    Log.i("API", "onResponse: ${t.message}")
+                                                }
+
+                                            })
+                                        }) {
+                                            Icon(imageVector = Icons.Default.Search, contentDescription = "icon_search")
+                                        }
+                                    }
+                                )
+
+
+
 
                             Spacer(modifier = Modifier.height(10.dp))
                             Text(

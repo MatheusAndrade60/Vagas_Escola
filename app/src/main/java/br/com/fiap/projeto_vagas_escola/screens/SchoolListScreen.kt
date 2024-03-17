@@ -53,9 +53,9 @@ fun SchoolListScreen() {
     }
 }
 
-@Preview()
-@Composable
-fun SchoolListScreenView() {
-    SchoolListScreen()
-}
+//@Preview()
+//@Composable
+//fun SchoolListScreenView() {
+//    SchoolListScreen()
+//}
 
