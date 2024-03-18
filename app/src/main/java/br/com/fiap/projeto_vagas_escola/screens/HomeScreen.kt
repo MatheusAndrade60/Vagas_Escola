@@ -1,5 +1,4 @@
 package br.com.fiap.projeto_vagas_escola.screens
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -78,26 +77,23 @@ fun HomeScreen() {
                             .size(500.dp)
                     )
                     Spacer(modifier = Modifier.height(5.dp))
-                    Row(modifier = Modifier
-                        .fillMaxWidth()
-                        ) {
+
+                    Row(modifier = Modifier.fillMaxWidth()) {
                         Button(
-                            onClick = {},
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0000FF)),
-                            modifier = Modifier
-                                .size(width = 180.dp, height = 50.dp),
+                            onClick = {navController.navigate("school")},
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF58B958)),
+                            modifier = Modifier.weight(1f), // Use weight para ocupar o espaço restante na linha
                             shape = RoundedCornerShape(8.dp)
                         ) {
-                            // Texto dentro do botão
-                        }
-                        Button(
-                            onClick = {},
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Green),
-                            modifier = Modifier
-                                .size(width = 180.dp, height = 50.dp),
-                            shape = RoundedCornerShape(8.dp)
-                        ) {
-                            // Texto dentro do botão
+                            Row {
+//                                Image(// TENTEI INSERIR ESSE ICONE MAS NÃO FICOU LEGAL
+//                                    painter = painterResource(id = R.drawable.escolaicon),
+//                                    contentDescription = null,
+//                                    modifier = Modifier.size(24.dp) // Defina o tamanho da imagem conforme necessário
+//                                )
+                                Spacer(modifier = Modifier.width(8.dp)) // Adicione um espaçamento entre a imagem e o texto
+                                Text(text = "Pesquisar escolas próximas")
+                            }
                         }
                     }
                 }
@@ -107,8 +103,9 @@ fun HomeScreen() {
 }
 
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen()
-}
+
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun HomeScreenPreview() {
+//    HomeScreen()
+//}
