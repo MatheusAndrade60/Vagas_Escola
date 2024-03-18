@@ -42,6 +42,8 @@ import br.com.fiap.projeto_vagas_escola.R
 import br.com.fiap.projeto_vagas_escola.component.Header
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
@@ -379,7 +381,8 @@ fun CadastroScreen(navController: NavController) {
                                     focusedBorderColor = colorResource(id = R.color.black)
                                 ),
                                 shape = RoundedCornerShape(30.dp),
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done, keyboardType = KeyboardType.Number),
+                                visualTransformation = PasswordVisualTransformation()
                             )
                             Text(
                                 text = "No máximo 6 números",

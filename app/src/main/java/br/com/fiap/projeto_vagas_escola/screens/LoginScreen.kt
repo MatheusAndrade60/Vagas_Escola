@@ -31,7 +31,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -150,7 +152,8 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
                                 focusedBorderColor = Color.Black
                             ),
                             shape = RoundedCornerShape(30.dp),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done, keyboardType = KeyboardType.Number),
+                            visualTransformation = PasswordVisualTransformation()
                         )
                         //Mostra uma mensagem de erro caso email ou senha seja incorreto
                         Text(
