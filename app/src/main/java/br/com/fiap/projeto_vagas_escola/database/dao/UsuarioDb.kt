@@ -19,7 +19,7 @@ abstract class UsuarioDb : RoomDatabase(){
                     .databaseBuilder(
                         context,
                         UsuarioDb::class.java,
-                        "usuario_db"
+                        "usuarios_db"
                     )
                     .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
