@@ -11,4 +11,9 @@ class UsuarioRepository(context: Context) {
     fun salvar(usuario: Usuario): Long{
         return db.salvar(usuario = usuario)
     }
+
+    fun validarCredenciais(email: String, senha: String): Boolean {
+        val usuario = db.buscarUsuarioPorEmail(email)
+        return usuario != null && usuario.senha == senha
+    }
 }
