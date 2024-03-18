@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -26,7 +27,7 @@ fun Header() {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
-            .height(140.dp)
+            .height(120.dp)
             .background(color = Color(0xFF58B958))
     ) {
         Spacer(modifier = Modifier.height(16.dp))
@@ -34,14 +35,8 @@ fun Header() {
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "",
             modifier = Modifier
-                .size(80.dp)
-                .clip(shape = CircleShape),
+                .size(130.dp, 80.dp),
             contentScale = ContentScale.Crop
-        )
-        Text(
-            text = "ESCOLAS",
-            color = Color(0xFF333A3A),
-            fontSize = 20.sp
         )
     }
 }

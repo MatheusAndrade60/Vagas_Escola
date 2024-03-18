@@ -86,11 +86,6 @@ fun HomeScreen(navController: NavController) {
                             shape = RoundedCornerShape(8.dp)
                         ) {
                             Row {
-//                                Image(// TENTEI INSERIR ESSE ICONE MAS NÃO FICOU LEGAL
-//                                    painter = painterResource(id = R.drawable.escolaicon),
-//                                    contentDescription = null,
-//                                    modifier = Modifier.size(24.dp) // Defina o tamanho da imagem conforme necessário
-//                                )
                                 Spacer(modifier = Modifier.width(8.dp)) // Adicione um espaçamento entre a imagem e o texto
                                 Text(text = "Pesquisar escolas próximas")
                             }

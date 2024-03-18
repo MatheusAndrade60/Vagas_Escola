@@ -1,6 +1,6 @@
 package br.com.fiap.projeto_vagas_escola
 
-import android.content.Context
+import br.com.fiap.projeto_vagas_escola.screens.SchoolListScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -45,9 +45,8 @@ class MainActivity : ComponentActivity() {
                             HomeScreen(navController)
                         }
                         composable(route = "school") {
-                            HomeScreen(navController)
+                            SchoolListScreen(navController, Unit)
                         }
-
                     }
                 }
             }
