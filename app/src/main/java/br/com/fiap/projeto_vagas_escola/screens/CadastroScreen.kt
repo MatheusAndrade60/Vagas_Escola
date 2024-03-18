@@ -1,10 +1,10 @@
 package br.com.fiap.projeto_vagas_escola.screens
 
 import android.util.Log
+import androidx.annotation.experimental.Experimental
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,6 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -44,26 +45,25 @@ import androidx.navigation.NavController
 import br.com.fiap.projeto_vagas_escola.R
 import br.com.fiap.projeto_vagas_escola.component.Header
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
+import br.com.fiap.projeto_vagas_escola.database.repository.UsuarioRepository
 import br.com.fiap.projeto_vagas_escola.model.Endereco
+import br.com.fiap.projeto_vagas_escola.model.Usuario
 import br.com.fiap.projeto_vagas_escola.service.RetrofitFactory
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-//import kotlinx.serialization.Serializable
-//import kotlinx.serialization.json.Json
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 import java.net.URL
 
 @Composable
 fun CadastroScreen(navController: NavController) {
-
-//    val context = LocalContext.current
-//    val contatoRepository = UsuarioRepository(context)
-
-    var nomeResponsavel by remember {
+    var nome_responsavel by remember {
         mutableStateOf("")
     }
-    var cpfResponsavel by remember {
+    var cpf_responsavel by remember {
         mutableStateOf("")
     }
     var cep by remember {
@@ -74,9 +74,6 @@ fun CadastroScreen(navController: NavController) {
     }
     var senha by remember {
         mutableStateOf("")
-    }
-    var listaEnderecos by remember {
-        mutableStateOf(listOf<Endereco>())
     }
 
     //Box inicial com logo e titulo
@@ -102,6 +99,9 @@ fun CadastroScreen(navController: NavController) {
                         .fillMaxWidth()
                         .padding(horizontal = 32.dp, vertical = 50.dp)
                 ) {
+                    val context = LocalContext.current
+                    val usuarioRepository = UsuarioRepository(context)
+
                     Card(modifier = Modifier
                         .fillMaxWidth(),
                         colors = CardDefaults.cardColors(Color.White),
@@ -133,9 +133,9 @@ fun CadastroScreen(navController: NavController) {
                                 color = Color.Black
                             )
                             OutlinedTextField(
-                                value = nomeResponsavel,
+                                value = nome_responsavel,
                                 onValueChange = {
-                                    nomeResponsavel = it
+                                    nome_responsavel = it
                                 },
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -157,9 +157,9 @@ fun CadastroScreen(navController: NavController) {
                                 color = Color.Black
                             )
                                 OutlinedTextField(
-                                    value = cpfResponsavel,
+                                    value = cpf_responsavel,
                                     onValueChange = {
-                                        cpfResponsavel = it
+                                        cpf_responsavel = it
                                     },
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -201,22 +201,16 @@ fun CadastroScreen(navController: NavController) {
                                                 override fun onResponse(
                                                     call: Call<Endereco>,
                                                     response: Response<Endereco>
-                                                ) {
-                                                    Log.i("API", "onResponse: ${response.body()}")
-                                                }
+                                                ){}
                                                 override fun onFailure(call: Call<Endereco>, t: Throwable) {
                                                     Log.i("API", "onResponse: ${t.message}")
                                                 }
-
                                             })
                                         }) {
                                             Icon(imageVector = Icons.Default.Search, contentDescription = "icon_search")
                                         }
                                     }
                                 )
-
-
-
 
                             Spacer(modifier = Modifier.height(10.dp))
                             Text(
@@ -270,15 +264,15 @@ fun CadastroScreen(navController: NavController) {
                             //Ao clicar no botao sera criado um novo usuario e logo em seguida ir mudar para a proxima tela
                             Button(
                                 onClick = {
-//                                   var usuario = Usuario(
-//                                        id_usuario = 0,
-//                                        nomeResponsavel = nomeResponsavel,
-//                                        cpfResponsavel = cpfResponsavel,
-//                                        cep = cep,
-//                                        email = email,
-//                                        senha = senha
-//                                    )
-//                                    contatoRepository.salvar(usuario)
+                                   val usuario = Usuario(
+                                        id_usuario = 0,
+                                        nome_responsavel = nome_responsavel,
+                                        cpf_responsavel = cpf_responsavel,
+                                        cep = cep,
+                                        email = email,
+                                        senha = senha
+                                   )
+                                    usuarioRepository.salvar(usuario)
                                     navController.navigate("login")
                                 },
                                 modifier = Modifier
