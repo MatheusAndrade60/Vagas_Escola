@@ -30,6 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import br.com.fiap.projeto_vagas_escola.component.Header
 import br.com.fiap.projeto_vagas_escola.database.repository.getSchoolsByEscola
@@ -53,8 +55,9 @@ fun SchoolListScreen(navController: NavHostController, schoolListScreen: Unit){
         Text(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally),
-            text = "Lista de escolas da região ",
+            text = "Lista de Escolas da Região ",
             fontSize = 24.sp,
+            fontStyle = FontStyle.Italic,
             fontWeight = FontWeight.Bold,
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -127,18 +130,24 @@ fun SchoolCard(school: School){
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .padding(end = 10.dp),
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Nª de Vagas",
-                    fontSize = 14.sp,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally),
+                    text = "Vagas",
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                 )
                 Text(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally),
                     text = school.quantidadeVagas.toString(),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
+                    color = Color.Yellow
                 )
             }
         }
@@ -149,7 +158,7 @@ fun SchoolCard(school: School){
 //@Preview(showBackground = true, showSystemUi = true)
 //@Composable
 //fun SchoolListScreenView() {
-//    br.com.fiap.projeto_vagas_escola.screens.SchoolListScreen()
+//    SchoolListScreen()
 //}
 
 
