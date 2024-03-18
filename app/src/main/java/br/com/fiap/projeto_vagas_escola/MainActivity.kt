@@ -37,9 +37,12 @@ class MainActivity : ComponentActivity() {
                         composable(route = "cadastro") {
                             CadastroScreen(navController)
                         }
-//                        composable(route = "home") {
-//                            HomeScreen(navController)
-//                        }
+                        composable(route = "home") {
+                            HomeScreen(navController)
+                        }
+                        composable(route = "school") {
+                            HomeScreen(navController)
+                        }
                     }
                 }
             }
