@@ -38,13 +38,21 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.projeto_vagas_escola.R
 import br.com.fiap.projeto_vagas_escola.component.Header
+import br.com.fiap.projeto_vagas_escola.database.repository.UsuarioRepository
 
 @Composable
-fun LoginScreen(navController: NavController){
+fun LoginScreen(navController: NavController, usuarioRepository: UsuarioRepository){
     var email by remember {
         mutableStateOf("")
     }
     var senha by remember {
+        mutableStateOf("")
+    }
+    var borderColor by remember {
+        mutableStateOf(Color.Gray)
+    }
+    var
+        errorText by remember {
         mutableStateOf("")
     }
 
@@ -104,13 +112,14 @@ fun LoginScreen(navController: NavController){
                             value = email,
                             onValueChange = {
                                 email = it
+                                borderColor = Color.Gray
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(height = 48.dp),
+                                .height(height = 50.dp),
                             colors = OutlinedTextFieldDefaults.colors(
-                                unfocusedBorderColor = colorResource(id = R.color.gray),
-                                focusedBorderColor = colorResource(id = R.color.black)
+                                unfocusedBorderColor = borderColor,
+                                focusedBorderColor = Color.Black
                             ),
                             shape = RoundedCornerShape(30.dp),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
@@ -127,21 +136,32 @@ fun LoginScreen(navController: NavController){
                         OutlinedTextField(
                             value = senha,
                             onValueChange = {
-                                senha = it
+                                if(it.length <= 6){
+                                    senha = it
+                                }
+                                borderColor = Color.Gray
+                                errorText = ""
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(height = 48.dp),
+                                .height(height = 50.dp),
                             colors = OutlinedTextFieldDefaults.colors(
-                                unfocusedBorderColor = colorResource(id = R.color.gray),
-                                focusedBorderColor = colorResource(id = R.color.black)
+                                unfocusedBorderColor = borderColor,
+                                focusedBorderColor = Color.Black
                             ),
                             shape = RoundedCornerShape(30.dp),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        )
+                        //Mostra uma mensagem de erro caso email ou senha seja incorreto
+                        Text(
+                            text = errorText,
+                            fontSize = 12.sp,
+                            color = Color.Red,
+                            modifier = Modifier.padding(top = 3.dp)
                         )
 
                         //Botão que ir levar o usuario para a tela de cadastro
-                        Spacer(modifier = Modifier.height(15.dp))
+                        Spacer(modifier = Modifier.height(5.dp))
                         Row(
                             horizontalArrangement = Arrangement.Center,
                             modifier = Modifier.fillMaxWidth()
@@ -167,7 +187,12 @@ fun LoginScreen(navController: NavController){
                         Spacer(modifier = Modifier.height(2.dp))
                         Button(
                             onClick = {
-                                navController.navigate("home")
+                                if (usuarioRepository.validarCredenciais(email, senha)) {
+                                    navController.navigate("home")
+                                }else{
+                                    borderColor = Color.Red
+                                    errorText = "Email ou senha inválido"
+                                }
                             },
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
@@ -182,23 +207,6 @@ fun LoginScreen(navController: NavController){
                                 fontSize = 14.sp
                             )
                         }
-                    }
-                    Column(
-                        modifier = Modifier
-                            .padding(
-                                vertical = 16.dp,
-                                horizontal = 32.dp
-                            )
-                    ) {
-                        Text(text = "Sua senha deve conter no máximo 8 carácteres",
-                            fontSize = 10.sp,
-                            color = Color.Gray
-                        )
-                        Text(
-                            text = "Evite colocar carácteres especiais",
-                            fontSize = 10.sp,
-                            color = Color.Gray
-                        )
                     }
                 }
             }

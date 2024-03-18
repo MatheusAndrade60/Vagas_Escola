@@ -55,8 +55,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @Composable
-fun CadastroScreen(navController: NavController
-) {
+fun CadastroScreen(navController: NavController) {
     var nome_responsavel by remember {
         mutableStateOf("")
     }
@@ -75,6 +74,12 @@ fun CadastroScreen(navController: NavController
     var senha by remember {
         mutableStateOf("")
     }
+
+    val canNavigate = nome_responsavel.isNotBlank() &&
+            cpf_responsavel.isNotBlank() &&
+            cep.isNotBlank() &&
+            email.isNotBlank() &&
+            senha.isNotBlank()
 
     //Box inicial com logo e titulo
     Box(
@@ -157,63 +162,81 @@ fun CadastroScreen(navController: NavController
                                 fontWeight = FontWeight.Normal,
                                 color = Color.Black
                             )
-                                OutlinedTextField(
-                                    value = cpf_responsavel,
-                                    onValueChange = {
+                            OutlinedTextField(
+                                value = cpf_responsavel,
+                                onValueChange = {
+                                    if(it.length <= 11){
                                         cpf_responsavel = it
-                                    },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(height = 50.dp),
-                                    colors = OutlinedTextFieldDefaults.colors(
-                                        unfocusedBorderColor = colorResource(id = R.color.gray),
-                                        focusedBorderColor = colorResource(id = R.color.black)
-                                    ),
-                                    shape = RoundedCornerShape(30.dp),
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                )
-
-                                Spacer(modifier = Modifier.height(10.dp))
-                                Text(
-                                    text = "CEP",
-                                    modifier = Modifier.padding(bottom = 8.dp),
-                                    fontSize = 13.sp,
-                                    fontWeight = FontWeight.Normal,
-                                    color = Color.Black
-                                )
-                                OutlinedTextField(
-                                    value = cep,
-                                    onValueChange = {
-                                        cep = it
-                                    },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(height = 50.dp),
-                                    colors = OutlinedTextFieldDefaults.colors(
-                                        unfocusedBorderColor = colorResource(id = R.color.gray),
-                                        focusedBorderColor = colorResource(id = R.color.black)
-                                    ),
-                                    shape = RoundedCornerShape(30.dp),
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                    trailingIcon = {
-                                        IconButton(onClick = {
-                                            val call = RetrofitFactory().getCepService().getEnderecoByCep(cep = cep)
-                                            call.enqueue(object : Callback<Endereco>{
-                                                override fun onResponse(
-                                                    call: Call<Endereco>,
-                                                    response: Response<Endereco>
-                                                ){
-                                                    cepState = response.body()!!
-                                                }
-                                                override fun onFailure(call: Call<Endereco>, t: Throwable) {
-                                                    Log.i("API", "onResponse: ${t.message}")
-                                                }
-                                            })
-                                        }) {
-                                            Icon(imageVector = Icons.Default.Search, contentDescription = "icon_search")
-                                        }
                                     }
-                                )
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(height = 50.dp),
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    unfocusedBorderColor = colorResource(id = R.color.gray),
+                                    focusedBorderColor = colorResource(id = R.color.black)
+                                ),
+                                shape = RoundedCornerShape(30.dp),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            )
+                            Text(
+                                text = "Somente números. Ex:00000011111",
+                                modifier = Modifier
+                                    .padding(start = 20.dp),
+                                fontSize = 11.sp,
+                                color = Color.Gray
+                            )
+
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Text(
+                                text = "CEP",
+                                modifier = Modifier.padding(bottom = 8.dp),
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Normal,
+                                color = Color.Black
+                            )
+                            OutlinedTextField(
+                                value = cep,
+                                onValueChange = {
+                                    if(it.length <= 8){
+                                        cep = it
+                                    }
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(height = 50.dp),
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    unfocusedBorderColor = colorResource(id = R.color.gray),
+                                    focusedBorderColor = colorResource(id = R.color.black)
+                                ),
+                                shape = RoundedCornerShape(30.dp),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                trailingIcon = {
+                                    IconButton(onClick = {
+                                        val call = RetrofitFactory().getCepService().getEnderecoByCep(cep = cep)
+                                        call.enqueue(object : Callback<Endereco>{
+                                            override fun onResponse(
+                                                call: Call<Endereco>,
+                                                response: Response<Endereco>
+                                            ){
+                                                cepState = response.body()!!
+                                            }
+                                            override fun onFailure(call: Call<Endereco>, t: Throwable) {
+                                                Log.i("API", "onResponse: ${t.message}")
+                                            }
+                                        })
+                                    }) {
+                                        Icon(imageVector = Icons.Default.Search, contentDescription = "icon_search")
+                                    }
+                                }
+                            )
+                            Text(
+                                text = "Somente números. Ex:00001111",
+                                modifier = Modifier
+                                    .padding(start = 20.dp),
+                                fontSize = 11.sp,
+                                color = Color.Gray
+                            )
 
                             Spacer(modifier = Modifier.height(10.dp))
                             Text(
@@ -280,7 +303,7 @@ fun CadastroScreen(navController: NavController
                                     focusedBorderColor = colorResource(id = R.color.black)
                                 ),
                                 shape = RoundedCornerShape(30.dp),
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
                             )
 
                             Spacer(modifier = Modifier.height(10.dp))
@@ -293,7 +316,11 @@ fun CadastroScreen(navController: NavController
                             )
                             OutlinedTextField(
                                 value = cepState.uf,
-                                onValueChange = {},
+                                onValueChange = {
+                                    if(it.length <= 2){
+                                        cep = it
+                                    }
+                                },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(height = 50.dp),
@@ -302,6 +329,7 @@ fun CadastroScreen(navController: NavController
                                     focusedBorderColor = colorResource(id = R.color.black)
                                 ),
                                 shape = RoundedCornerShape(30.dp),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
                             )
 
                             Spacer(modifier = Modifier.height(10.dp))
@@ -339,7 +367,9 @@ fun CadastroScreen(navController: NavController
                             OutlinedTextField(
                                 value = senha,
                                 onValueChange = {
-                                    senha = it
+                                    if(it.length <= 6){
+                                        senha = it
+                                    }
                                 },
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -350,6 +380,13 @@ fun CadastroScreen(navController: NavController
                                 ),
                                 shape = RoundedCornerShape(30.dp),
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            )
+                            Text(
+                                text = "No máximo 6 números",
+                                modifier = Modifier
+                                    .padding(start = 20.dp),
+                                fontSize = 11.sp,
+                                color = Color.Gray
                             )
 
                             Spacer(modifier = Modifier.height(20.dp))
@@ -376,7 +413,8 @@ fun CadastroScreen(navController: NavController
                                     .size(width = 118.dp, height = 40.dp)
                                     .fillMaxWidth(),
                                 shape = RoundedCornerShape(30.dp),
-                                colors = ButtonDefaults.buttonColors(Color(0xFF459945))
+                                colors = ButtonDefaults.buttonColors(Color(0xFF459945)),
+                                enabled = canNavigate
                             ) {
                                 Text(
                                     text = "FINALIZAR",

@@ -1,5 +1,6 @@
 package br.com.fiap.projeto_vagas_escola
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.com.fiap.projeto_vagas_escola.database.repository.UsuarioRepository
 import br.com.fiap.projeto_vagas_escola.screens.HomeScreen
 import br.com.fiap.projeto_vagas_escola.screens.CadastroScreen
 import br.com.fiap.projeto_vagas_escola.screens.LoginScreen
@@ -17,6 +19,7 @@ import br.com.fiap.projeto_vagas_escola.screens.WelcomeScreen
 import br.com.fiap.projeto_vagas_escola.ui.theme.ProjetoVagas_EscolaTheme
 
 class MainActivity : ComponentActivity() {
+    private lateinit var usuarioRepository: UsuarioRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -26,13 +29,14 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
+                    usuarioRepository = UsuarioRepository(context = this@MainActivity)
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "welcome") {
                         composable(route = "welcome") {
                             WelcomeScreen(navController)
                         }
                         composable(route = "login") {
-                            LoginScreen(navController)
+                            LoginScreen(navController, usuarioRepository)
                         }
                         composable(route = "cadastro") {
                             CadastroScreen(navController)
